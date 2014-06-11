@@ -17,14 +17,15 @@ def transform(arff_fp, svm_fp):
     """Transform every training instance of ARFF file to SVM instances
        and return all the field mappings collected."""
     reader = csv.reader(arff_fp, delimiter=ARFF_DELIMITER)
+    reader = filter(None, reader) # ignore empty lines.
     category_table = {}
     counter = 0
-    
     for line in reader:
-        if line[0][0]=='@':
-            continue #ignore header lines
-        
+        if line[0][0]=='@' or line[0][0] =='%':
+            continue # ignore header lines and comments.
+
         *rest, category = line
+        
         if category not in category_table:
             numeric_category = category_table[category] = counter = counter + 1
         else:

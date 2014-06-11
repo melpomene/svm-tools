@@ -25,7 +25,6 @@ def transform(arff_fp, svm_fp):
             continue # ignore header lines and comments.
 
         *rest, category = line
-        
         if category not in category_table:
             numeric_category = category_table[category] = counter = counter + 1
         else:
